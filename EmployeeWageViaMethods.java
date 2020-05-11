@@ -9,10 +9,10 @@ class EmployeeWageViaMethods
 		final int isFullTime=1 ,isPartTime=2;
 		//variables
 		int empDailyWage=0, empDailyHours=0, empWagePerHour=20;
-		int empMonthlyWage=0;
+		int empMonthlyWage=0 , empWorkingHours=0, empWorkingDays=0;
 		
 		//computation of Monthly wage with maximum working days in a month as 20
-		for (int i=1;i<=20;i++)
+		while(empWorkingDays<=20 && empWorkingHours<100)
 		{	
 			int empCheck=(int)(Math.floor(Math.random()*10)%3);
 			switch (empCheck)
@@ -27,6 +27,8 @@ class EmployeeWageViaMethods
 					}	
 		empDailyWage=empDailyHours*empWagePerHour;
 		empMonthlyWage+=empDailyWage;
+		empWorkingDays++;
+		empWorkingHours+=empDailyHours;
 		}
 		System.out.println("Monthly Wage of Employee is :"+empMonthlyWage);
 	}
