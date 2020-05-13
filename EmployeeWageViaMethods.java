@@ -2,18 +2,16 @@ package com.employeeWageUsingMethods;
 
 class EmployeeWageViaMethods 
 {	
-	static final int isFullTime=1 ,isPartTime=2;
-	static int empDailyWage=0, empDailyHours=0, empWagePerHour=20;
-	static int empMonthlyWage=0 , empWorkingHours=0, empWorkingDays=0;
-	
+	static final int IS_FULL_TIME=1 ,IS_PART_TIME=2;
 	static int workingHoursComputation(int empCheck)
 	{
+		int empDailyHours;
 		switch (empCheck)
 		{
-			case isFullTime :
+			case IS_FULL_TIME :
 				empDailyHours=8;
 			break;
-			case isPartTime :
+			case IS_PART_TIME :
 				empDailyHours=4;
 			break;
 			default :
@@ -21,25 +19,27 @@ class EmployeeWageViaMethods
 				}
 		return empDailyHours;
 	}
-	//computation of Monthly wage with maximum working days in a month as 20	
-	void monthlyWageComputation()
+	//computation of Monthly wage and its display	
+	static void monthlyWageComputation(String companyName,int maxWorkingDays,int maxWorkingHours, int wagePerHour)
 	{
-		while(empWorkingDays<=20 && empWorkingHours<100)
+		int empDailyWage=0, empDailyHours=0, empMonthlyWage=0, empWorkingHours=0, empWorkingDays=0;
+		while(empWorkingDays<=maxWorkingDays && empWorkingHours<maxWorkingHours)
 		{	
 			int empCheck=(int)(Math.floor(Math.random()*10)%3);
 			empDailyHours=workingHoursComputation(empCheck);	
-			empDailyWage=empDailyHours*empWagePerHour;
+			empDailyWage=empDailyHours*wagePerHour;
 			empMonthlyWage+=empDailyWage;
 			empWorkingDays++;
 			empWorkingHours+=empDailyHours;
 		}
-		
+		System.out.println("Monthly Wage of Employee for "+companyName+" is :"+empMonthlyWage);
 	}
 	public static void main(String args[])
 	{	//welcome message
 		System.out.println("Welcome to Employee Wage Computation Program");		
-		EmployeeWageViaMethods employee=new EmployeeWageViaMethods();
-		employee.monthlyWageComputation();
-		System.out.println("Monthly Wage of Employee is :"+empMonthlyWage);
+		monthlyWageComputation("D-mart",20,100,20);	
+		monthlyWageComputation("Reliance",22,120,15);
+		
+		
 	}
 }
