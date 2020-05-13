@@ -26,7 +26,7 @@ class EmployeeWageViaMethods {
 				}
 		return empDailyHours;
 	}
-	//computation of Monthly wage with maximum working days in a month as 20	
+	//computation of Monthly wage with maximum working days in a month according to company	
 	void monthlyWageComputation()
 	{	
 		int empDailyWage, empWorkingDays=0,empWorkingHours=0, empMonthlyWage=0;
