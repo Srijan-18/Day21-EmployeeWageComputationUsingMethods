@@ -47,17 +47,20 @@ class EmployeeWageViaMethods implements IEmployeeWageViaMethods
 		for (int i=0;i<companySpecificsArrayList.size();i++)
 		{
 			CompanySpecifics companySpecifics=companySpecificsArrayList.get(i);
-			int empDailyWage, empWorkingDays=0,empWorkingHours=0, empMonthlyWage=0;
+			int empDailyWage, empWorkingDays=0,empWorkingHours=0; 
 			while(empWorkingDays<=companySpecifics.maxMonthlyDays && empWorkingHours<companySpecifics.maxMonthlyHours)
 			{	
 				int empCheck=(int)(Math.floor(Math.random()*10)%3);
 				int empDailyHours=this.workingHoursComputation(empCheck);	
 				empDailyWage=empDailyHours*companySpecifics.wagePerHour;
-				empMonthlyWage+=empDailyWage;
+				companySpecifics.dailyWage.add(empDailyWage);
+				companySpecifics.totalWage+=empDailyWage;
 				empWorkingDays++;
 				empWorkingHours+=empDailyHours;
 			}
-			System.out.println("Total Employee wage for company "+ companySpecifics.companyName +" is " +empMonthlyWage);
+			System.out.println("*****  "+companySpecifics.companyName+"  *****");
+			System.out.println("Daily Wage :"+companySpecifics.dailyWage);
+			System.out.println("Total Wage : " +companySpecifics.totalWage);
 		}
 	}
 	public static void main(String args[])
@@ -76,12 +79,15 @@ class CompanySpecifics
 	public final int maxMonthlyDays;
 	public final int maxMonthlyHours;
 	public final int wagePerHour;
-
+	public int totalWage;
+	ArrayList<Integer> dailyWage;
 	public CompanySpecifics(String companyName,int maxMonthlyDays,int maxMonthlyHours,int wagePerHour)
 	{
 		this.companyName=companyName;
 		this.maxMonthlyDays=maxMonthlyDays;
 		this.maxMonthlyHours=maxMonthlyHours;
 		this.wagePerHour=wagePerHour;
+		totalWage=0;
+		dailyWage=new ArrayList<Integer>();
 	}
 }
