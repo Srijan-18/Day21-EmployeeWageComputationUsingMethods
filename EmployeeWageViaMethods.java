@@ -1,28 +1,49 @@
 package com.employeeWageUsingMethods;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+class CompanySpecifics
+{
+	public final String companyName;
+	public final int maxMonthlyDays;
+	public final int maxMonthlyHours;
+	public final int wagePerHour;
+	public int totalWage;
+	ArrayList<Integer> dailyWage;
+	public CompanySpecifics(String companyName,int maxMonthlyDays,int maxMonthlyHours,int wagePerHour)
+	{
+		this.companyName=companyName;
+		this.maxMonthlyDays=maxMonthlyDays;
+		this.maxMonthlyHours=maxMonthlyHours;
+		this.wagePerHour=wagePerHour;
+		totalWage=0;
+		dailyWage=new ArrayList<Integer>();
+	}
+}
 
 interface IEmployeeWageViaMethods
 {
 	public void addCompany(String company, int maxWorkingDays, int maxWorkingHours,int empWagePerHour);
 	public int workingHoursComputation(int empCheck);
 	public void monthlyWageComputation();
+	public int getTotalWage(String companyName );
 }
 class EmployeeWageViaMethods implements IEmployeeWageViaMethods 
 {
 	static final int IS_FULL_TIME=1 ,IS_PART_TIME=2;
-	String company;
 	private ArrayList<CompanySpecifics> companySpecificsArrayList;
-	
+	private HashMap<String,CompanySpecifics> companySpecificsHashMap;
 	public EmployeeWageViaMethods()
 	{
 		companySpecificsArrayList=new ArrayList<CompanySpecifics>();
+		companySpecificsHashMap=new HashMap<String,CompanySpecifics>();
 	}
 	
 	public void addCompany(String company, int maxWorkingDays, int maxWorkingHours,int empWagePerHour)
 	{	
 		CompanySpecifics companySpecifics=new CompanySpecifics(company,maxWorkingDays,maxWorkingHours,empWagePerHour);
 		companySpecificsArrayList.add(companySpecifics);
+		companySpecificsHashMap.put(company,companySpecifics);
 	}
 	//Daily Working Hours Selection
 	public int workingHoursComputation(int empCheck)
@@ -60,8 +81,13 @@ class EmployeeWageViaMethods implements IEmployeeWageViaMethods
 			}
 			System.out.println("*****  "+companySpecifics.companyName+"  *****");
 			System.out.println("Daily Wage :"+companySpecifics.dailyWage);
-			System.out.println("Total Wage : " +companySpecifics.totalWage);
+			System.out.println("Total Wage : " +this.getTotalWage(companySpecifics.companyName));
 		}
+	}
+	//to get total wage when queried by specific company
+	public int getTotalWage(String companyName )
+	{
+		return companySpecificsHashMap.get(companyName).totalWage;
 	}
 	public static void main(String args[])
 	{	//welcome message
@@ -71,23 +97,5 @@ class EmployeeWageViaMethods implements IEmployeeWageViaMethods
 		employeeWage.addCompany("Reliance", 20, 120, 40);
 		employeeWage.addCompany("BigBasket", 22, 130, 100);
 		employeeWage.monthlyWageComputation();
-	}
-}
-class CompanySpecifics
-{
-	public final String companyName;
-	public final int maxMonthlyDays;
-	public final int maxMonthlyHours;
-	public final int wagePerHour;
-	public int totalWage;
-	ArrayList<Integer> dailyWage;
-	public CompanySpecifics(String companyName,int maxMonthlyDays,int maxMonthlyHours,int wagePerHour)
-	{
-		this.companyName=companyName;
-		this.maxMonthlyDays=maxMonthlyDays;
-		this.maxMonthlyHours=maxMonthlyHours;
-		this.wagePerHour=wagePerHour;
-		totalWage=0;
-		dailyWage=new ArrayList<Integer>();
 	}
 }
