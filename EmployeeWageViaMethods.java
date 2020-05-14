@@ -1,6 +1,11 @@
 package com.employeeWageUsingMethods;
-
-class EmployeeWageViaMethods 
+interface IEmployeeWageViaMethods
+{
+	public void addCompany(String company, int maxWorkingDays, int maxWorkingHours,int empWagePerHour);
+	public int workingHoursComputation(int empCheck);
+	public void monthlyWageComputation();
+}
+class EmployeeWageViaMethods implements IEmployeeWageViaMethods 
 {
 	static final int IS_FULL_TIME=1 ,IS_PART_TIME=2;
 	String company;
@@ -17,7 +22,7 @@ class EmployeeWageViaMethods
 		companySpecificsArray[numOfCompanies]=new CompanySpecifics(company,maxWorkingDays,maxWorkingHours,empWagePerHour);
 		numOfCompanies++;
 	}
-	static int workingHoursComputation(int empCheck)
+	public int workingHoursComputation(int empCheck)
 	{	
 		int empDailyHours=0;
 		switch (empCheck)
@@ -34,14 +39,15 @@ class EmployeeWageViaMethods
 		return empDailyHours;
 	}
 	//computation of Monthly wage with maximum working days according to company	
-	void monthlyWageComputation()
-	{	for (int i=0;i<numOfCompanies;i++)
+	public void monthlyWageComputation()
+	{	
+		for (int i=0;i<numOfCompanies;i++)
 		{
 			int empDailyWage, empWorkingDays=0,empWorkingHours=0, empMonthlyWage=0;
 			while(empWorkingDays<=companySpecificsArray[i].maxMonthlyDays && empWorkingHours<companySpecificsArray[i].maxMonthlyHours)
 			{	
 				int empCheck=(int)(Math.floor(Math.random()*10)%3);
-				int empDailyHours=workingHoursComputation(empCheck);	
+				int empDailyHours=this.workingHoursComputation(empCheck);	
 				empDailyWage=empDailyHours*companySpecificsArray[i].wagePerHour;
 				empMonthlyWage+=empDailyWage;
 				empWorkingDays++;
