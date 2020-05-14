@@ -1,4 +1,7 @@
 package com.employeeWageUsingMethods;
+
+import java.util.ArrayList;
+
 interface IEmployeeWageViaMethods
 {
 	public void addCompany(String company, int maxWorkingDays, int maxWorkingHours,int empWagePerHour);
@@ -9,19 +12,19 @@ class EmployeeWageViaMethods implements IEmployeeWageViaMethods
 {
 	static final int IS_FULL_TIME=1 ,IS_PART_TIME=2;
 	String company;
-	private CompanySpecifics[] companySpecificsArray;
-	private int numOfCompanies=0;
+	private ArrayList<CompanySpecifics> companySpecificsArrayList;
 	
 	public EmployeeWageViaMethods()
 	{
-		companySpecificsArray=new CompanySpecifics[5];
+		companySpecificsArrayList=new ArrayList<CompanySpecifics>();
 	}
 	
 	public void addCompany(String company, int maxWorkingDays, int maxWorkingHours,int empWagePerHour)
-	{
-		companySpecificsArray[numOfCompanies]=new CompanySpecifics(company,maxWorkingDays,maxWorkingHours,empWagePerHour);
-		numOfCompanies++;
+	{	
+		CompanySpecifics companySpecifics=new CompanySpecifics(company,maxWorkingDays,maxWorkingHours,empWagePerHour);
+		companySpecificsArrayList.add(companySpecifics);
 	}
+	//Daily Working Hours Selection
 	public int workingHoursComputation(int empCheck)
 	{	
 		int empDailyHours=0;
@@ -41,19 +44,20 @@ class EmployeeWageViaMethods implements IEmployeeWageViaMethods
 	//computation of Monthly wage with maximum working days according to company	
 	public void monthlyWageComputation()
 	{	
-		for (int i=0;i<numOfCompanies;i++)
+		for (int i=0;i<companySpecificsArrayList.size();i++)
 		{
+			CompanySpecifics companySpecifics=companySpecificsArrayList.get(i);
 			int empDailyWage, empWorkingDays=0,empWorkingHours=0, empMonthlyWage=0;
-			while(empWorkingDays<=companySpecificsArray[i].maxMonthlyDays && empWorkingHours<companySpecificsArray[i].maxMonthlyHours)
+			while(empWorkingDays<=companySpecifics.maxMonthlyDays && empWorkingHours<companySpecifics.maxMonthlyHours)
 			{	
 				int empCheck=(int)(Math.floor(Math.random()*10)%3);
 				int empDailyHours=this.workingHoursComputation(empCheck);	
-				empDailyWage=empDailyHours*companySpecificsArray[i].wagePerHour;
+				empDailyWage=empDailyHours*companySpecifics.wagePerHour;
 				empMonthlyWage+=empDailyWage;
 				empWorkingDays++;
 				empWorkingHours+=empDailyHours;
 			}
-			System.out.println("Total Employee wage for company "+ companySpecificsArray[i].companyName +" is " +empMonthlyWage);
+			System.out.println("Total Employee wage for company "+ companySpecifics.companyName +" is " +empMonthlyWage);
 		}
 	}
 	public static void main(String args[])
@@ -81,11 +85,3 @@ class CompanySpecifics
 		this.wagePerHour=wagePerHour;
 	}
 }
-
-
-
-
-
-
-
-
